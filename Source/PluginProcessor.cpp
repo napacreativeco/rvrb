@@ -105,13 +105,14 @@ void DSPTryAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     spec.maximumBlockSize = static_cast<juce::uint32> (samplesPerBlock);
     spec.numChannels = static_cast<juce::uint32> (getTotalNumOutputChannels());
 
-    reverb.prepare(spec);
+    //reverb.prepare(spec);
+    //chorus.prepare(spec);
+    processorChain.prepare(spec);
 }
 
 void DSPTryAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+    processorChain.reset();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -147,25 +148,40 @@ void DSPTryAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
 
-    // SOMEHOW APPLY THE REVERB SETTINGS
+
+    // Reverb
+    auto& verb = processorChain.template get<verbIndex>();
 
     auto dryValue = apvts.getRawParameterValue("DRY_ID");
     auto wetValue = apvts.getRawParameterValue("WET_ID");
     auto roomValue = apvts.getRawParameterValue("ROOM_ID");
     auto dampValue = apvts.getRawParameterValue("DAMP_ID");
-    
 
     reverbParameters.dryLevel = dryValue->load();
     reverbParameters.wetLevel = wetValue->load();
     reverbParameters.roomSize = roomValue->load();
     reverbParameters.damping = dampValue->load();
 
-    reverb.setParameters(reverbParameters);
+    verb.setParameters(reverbParameters);
+
+
+    // Chorus
+    auto& chor = processorChain.template get<chorusIndex>();
+
+    chor.setRate(apvts.getRawParameterValue("RATE_ID")->load());
+    chor.setDepth(apvts.getRawParameterValue("DEPTH_ID")->load());
+    chor.setCentreDelay(apvts.getRawParameterValue("CENTRE_ID")->load());
+    chor.setFeedback(apvts.getRawParameterValue("FEEDBACK_ID")->load());
+    chor.setMix(apvts.getRawParameterValue("MIX_ID")->load());
 
 
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::ProcessContextReplacing<float> ctx(block);
-    reverb.process(ctx);
+    //reverb.process(ctx);
+    //chorus.process(ctx);
+
+    processorChain.process(ctx);
+
 
 }
 
@@ -204,10 +220,6 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 
 
-
-
-
-
 juce::AudioProcessorValueTreeState::ParameterLayout DSPTryAudioProcessor::createParameters()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
@@ -216,11 +228,23 @@ juce::AudioProcessorValueTreeState::ParameterLayout DSPTryAudioProcessor::create
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
 
     // push back to add a new param to the vector
+    // reverb
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DRY_ID", "Dry", 0.0f, 1.0f, 0.5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("WET_ID", "Wet", 0.0f, 1.0f, 0.5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("ROOM_ID", "Room", 0.0f, 1.0f, 0.5f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DAMP_ID", "Damp", 0.0f, 1.0f, 0.5f));
 
+    // chorus
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("RATE_ID", "Rate", 0.0f, 100.0f, 50.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DEPTH_ID", "Depth", 0.0f, 1.0f, 0.5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("CENTRE_ID", "Centre", 0.0f, 100.0f, 50.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FEEDBACK_ID", "Feedback", -1.0f, 1.0f, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("MIX_ID", "Mix", 0.0f, 1.0f, 0.5f));
+
     return { params.begin(), params.end() };
 
 }
+
+
+
+

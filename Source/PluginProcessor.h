@@ -64,6 +64,16 @@ private:
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
     juce::dsp::Reverb::Parameters reverbParameters;
 
+    juce::dsp::Chorus<float> chorus;
+
+    enum
+    {
+        verbIndex,
+        chorusIndex   // [2]
+    };
+
+    juce::dsp::ProcessorChain<juce::dsp::Reverb, juce::dsp::Chorus<float>> processorChain;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DSPTryAudioProcessor)
 };

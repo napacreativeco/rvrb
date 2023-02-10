@@ -15,14 +15,73 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize(600, 400);
+    addAndMakeVisible(scene);
 
+    //================================================================
+    // REVERB
+    //================================================================
+ 
+    // DRY
+    drySlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    drySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    drySliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DRY_ID", drySlider);
+
+    // WET
+    wetSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    wetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    wetSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "WET_ID", wetSlider);
+
+    // ROOM
+    roomSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    roomSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    roomSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "ROOM_ID", roomSlider);
+
+    // DAMP
+    dampSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    dampSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    dampSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DAMP_ID", dampSlider);
+
+    addAndMakeVisible(drySlider);
+    addAndMakeVisible(wetSlider);
+    addAndMakeVisible(roomSlider);
+    addAndMakeVisible(dampSlider);
+
+    //================================================================
+    // CHORUS
+    //================================================================
+
+    // RATE
+    rateSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    rateSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    rateSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "RATE_ID", rateSlider);
+
+    // DEPTH
     depthSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     depthSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
-
     depthSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DEPTH_ID", depthSlider);
 
+    // CENTRE
+    centreSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    centreSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    centreSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "CENTRE_ID", centreSlider);
+
+    // FEEDBACK
+    feedbackSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    feedbackSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    feedbackSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "FEEDBACK_ID", feedbackSlider);
+
+    // MIX
+    mixSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    mixSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
+    mixSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "MIX_ID", mixSlider);
+
+    addAndMakeVisible(rateSlider);
     addAndMakeVisible(depthSlider);
+    addAndMakeVisible(centreSlider);
+    addAndMakeVisible(feedbackSlider);
+    addAndMakeVisible(mixSlider);
+
 }
 
 DSPTryAudioProcessorEditor::~DSPTryAudioProcessorEditor()
@@ -37,10 +96,39 @@ void DSPTryAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText ("R1", getLocalBounds(), juce::Justification::centredTop, 1);
 }
 
 void DSPTryAudioProcessorEditor::resized()
 {
-    depthSlider.setBounds(getWidth() / 2 - 100, getHeight() / 2 - 50, 200, 100);
+    drySlider.setBounds(0, 10, 100, 100);
+    wetSlider.setBounds(100, 10, 100, 100);
+    roomSlider.setBounds(200, 10, 100, 100);
+    dampSlider.setBounds(300, 10, 100, 100);
+
+    rateSlider.setBounds(0, 110, 100, 100);
+    depthSlider.setBounds(100, 110, 100, 100);
+    centreSlider.setBounds(200, 110, 100, 100);
+    feedbackSlider.setBounds(300, 110, 100, 100);
+    mixSlider.setBounds(400, 100, 110, 100);
+
+    scene.setBounds(0, 0, getWidth(), 20);
+}
+
+
+
+
+
+SceneComponent::SceneComponent() {}
+
+SceneComponent::~SceneComponent() {};
+
+void SceneComponent::paint(juce::Graphics& g)
+{
+    g.fillAll(juce::Colours::lightblue);
+    g.drawFittedText("Reverb", getLocalBounds(), juce::Justification::centred, 1);
+}
+void SceneComponent::resized()
+{
+
 }
