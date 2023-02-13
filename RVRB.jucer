@@ -5,10 +5,17 @@
               companyName="Throne" pluginFormats="buildAU,buildAUv3,buildStandalone,buildVST3">
   <MAINGROUP id="io2TAc" name="RVRB">
     <GROUP id="{2FB688AC-5374-3B3B-C7D6-351366CBB72F}" name="Source">
+      <GROUP id="{CF053350-B439-A669-81FF-92FF13E402F0}" name="UI">
+        <FILE id="xBDySr" name="small-knob.png" compile="0" resource="1" file="../../../Downloads/small-knob.png"/>
+        <FILE id="V0epzO" name="big-knob.png" compile="0" resource="1" file="../../../Downloads/big-knob.png"/>
+        <FILE id="g4AV77" name="faceplate-idea.png" compile="0" resource="1"
+              file="../../../Downloads/faceplate-idea.png"/>
+      </GROUP>
       <FILE id="ICR4Qh" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="IIxsCL" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="Ubtvlu" name="Visualizer.h" compile="0" resource="0" file="Source/Visualizer.h"/>
       <FILE id="Xt1zj5" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="BVwzWC" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>

@@ -11,29 +11,11 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-
-class SceneComponent : public juce::Component
-{
-
-public:
-    SceneComponent();
-    ~SceneComponent() override;
-
-    void paint(juce::Graphics& g) override;
-    void resized() override;
-
-private:
-
-
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SceneComponent)
-};
-
-
 //==============================================================================
 /**
 */
 class DSPTryAudioProcessorEditor  : public juce::AudioProcessorEditor
+
 {
 public:
     DSPTryAudioProcessorEditor (DSPTryAudioProcessor&);
@@ -77,9 +59,11 @@ private:
     juce::Slider mixSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixSliderAttachment;
 
-
-    SceneComponent scene;
+    juce::Image background;
+    // juce::Image bigKnob;
+    // juce::Image smallKnob;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DSPTryAudioProcessorEditor)
 };
+
 

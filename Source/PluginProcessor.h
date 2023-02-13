@@ -58,18 +58,15 @@ public:
 
     juce::AudioProcessorValueTreeState apvts;
 
-
 private:
-    juce::dsp::Reverb reverb;
+  
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
     juce::dsp::Reverb::Parameters reverbParameters;
-
-    juce::dsp::Chorus<float> chorus;
 
     enum
     {
         verbIndex,
-        chorusIndex   // [2]
+        chorusIndex 
     };
 
     juce::dsp::ProcessorChain<juce::dsp::Reverb, juce::dsp::Chorus<float>> processorChain;
