@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   ratiofaceplatetemp_jpg;
+    const int            ratiofaceplatetemp_jpgSize = 141737;
+
     extern const char*   smallknob_png;
     const int            smallknob_pngSize = 9697;
 
@@ -18,7 +21,7 @@ namespace BinaryData
     const int            faceplateidea_pngSize = 292732;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 3;
+    const int namedResourceListSize = 4;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

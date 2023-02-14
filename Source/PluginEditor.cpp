@@ -17,6 +17,8 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
     // editor's size to whatever you need it to be.
     setSize(600, 400);
 
+    setLookAndFeel(&otherLookAndFeel);
+
 
     //================================================================
     // REVERB
@@ -86,6 +88,7 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
 
 DSPTryAudioProcessorEditor::~DSPTryAudioProcessorEditor()
 {
+    setLookAndFeel(nullptr);
 }
 
 //================================================================
@@ -99,20 +102,22 @@ void DSPTryAudioProcessorEditor::paint (juce::Graphics& g)
     //juce::File bgImageFile = juce::File::getCurrentWorkingDirectory().getChildFile("./UI/faceplate-idea.png");
     //background = juce::ImageCache::getFromFile(bgImageFile);
 
-    juce::Image background = juce::ImageCache::getFromMemory(BinaryData::faceplateidea_png, BinaryData::faceplateidea_pngSize);
+    juce::Image background = juce::ImageCache::getFromMemory(BinaryData::ratiofaceplatetemp_jpg, BinaryData::ratiofaceplatetemp_jpgSize);
     g.drawImageAt(background, 0, 0);
 
 }
 
 void DSPTryAudioProcessorEditor::resized()
 {
-    wetSlider.setBounds(170, 48, 100, 100);
-    drySlider.setBounds(58, 130, 100, 100);
-    roomSlider.setBounds(334, 48, 100, 100);
-    dampSlider.setBounds(448, 130, 100, 100);
 
-    rateSlider.setBounds(100, 258, 64, 64);
-    depthSlider.setBounds(440, 258, 64, 64);
+    drySlider.setBounds(57, 123, 110, 110);
+    wetSlider.setBounds(158, 20, 110, 110);
+    roomSlider.setBounds(332, 20, 110, 110);
+    dampSlider.setBounds(434, 123, 110, 110);
+
+
+    depthSlider.setBounds(129, 258, 84, 84);
+    rateSlider.setBounds(385, 258, 84, 84);
     // centreSlider.setBounds(200, 110, 100, 100);
     // feedbackSlider.setBounds(300, 110, 100, 100);
     // mixSlider.setBounds(400, 100, 110, 100);

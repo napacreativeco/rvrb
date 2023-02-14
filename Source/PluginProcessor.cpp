@@ -221,14 +221,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout DSPTryAudioProcessor::create
 
     // push back to add a new param to the vector
     // reverb
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DRY_ID", "Dry", 0.0f, 1.0f, 0.5f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("WET_ID", "Wet", 0.0f, 1.0f, 0.5f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("ROOM_ID", "Room", 0.0f, 1.0f, 0.5f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DAMP_ID", "Damp", 0.0f, 1.0f, 0.5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DRY_ID", "Dry", 0.0f, 1.0f, 1.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("WET_ID", "Wet", 0.0f, 1.0f, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("ROOM_ID", "Room", 0.0f, 1.0f, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DAMP_ID", "Damp", 0.0f, 1.0f, 0.0f));
 
     // chorus
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("RATE_ID", "Rate", 0.0f, 100.0f, 50.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DEPTH_ID", "Depth", 0.0f, 1.0f, 0.5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("RATE_ID", "Rate", 0.0f, 100.0f, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DEPTH_ID", "Depth", 0.0f, 1.0f, 0.0f));
     //params.push_back(std::make_unique<juce::AudioParameterFloat>("CENTRE_ID", "Centre", 0.0f, 100.0f, 50.0f));
     //params.push_back(std::make_unique<juce::AudioParameterFloat>("FEEDBACK_ID", "Feedback", -1.0f, 1.0f, 0.0f));
     //params.push_back(std::make_unique<juce::AudioParameterFloat>("MIX_ID", "Mix", 0.0f, 1.0f, 0.5f));
