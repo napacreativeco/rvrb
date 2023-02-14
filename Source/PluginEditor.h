@@ -71,6 +71,10 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> chorusBypassAttachment;
 
     juce::Image background;
+    juce::Image dotActive;
+    juce::Image dotInactive;
+
+    juce::GlowEffect glow;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DSPTryAudioProcessorEditor)
 };

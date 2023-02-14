@@ -25,6 +25,7 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
     chorusBypassButton.setColour(juce::TextButton::buttonOnColourId, juce::Colours::transparentBlack);
     chorusBypassButton.setToggleable(true);
     chorusBypassButton.setClickingTogglesState(true);
+
     chorusBypassButton.onClick = [this]()
     { 
         auto state = chorusBypassButton.getToggleState();
@@ -36,7 +37,7 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
         {
             audioProcessor.processorChain.setBypassed<1>(false);
         }
-
+        repaint();
     };
     addAndMakeVisible(chorusBypassButton);
 
@@ -118,7 +119,7 @@ DSPTryAudioProcessorEditor::~DSPTryAudioProcessorEditor()
 //================================================================
 // paint
 //================================================================
-void DSPTryAudioProcessorEditor::paint (juce::Graphics& g)
+void DSPTryAudioProcessorEditor::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
    // g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
@@ -126,8 +127,32 @@ void DSPTryAudioProcessorEditor::paint (juce::Graphics& g)
     //juce::File bgImageFile = juce::File::getCurrentWorkingDirectory().getChildFile("./UI/faceplate-idea.png");
     //background = juce::ImageCache::getFromFile(bgImageFile);
 
-    juce::Image background = juce::ImageCache::getFromMemory(BinaryData::ratiofaceplatetemp_jpg, BinaryData::ratiofaceplatetemp_jpgSize);
+
+
+
+    juce::Image background = juce::ImageCache::getFromMemory(BinaryData::reverbfaceplate_png, BinaryData::reverbfaceplate_pngSize);
+    juce::Image dotActive = juce::ImageCache::getFromMemory(BinaryData::activedot_png, BinaryData::activedot_pngSize);
+    juce::Image dotInactive = juce::ImageCache::getFromMemory(BinaryData::inactivedot_png, BinaryData::inactivedot_pngSize);
+
     g.drawImageAt(background, 0, 0);
+
+    g.setColour(juce::Colours::slategrey);
+    g.drawEllipse(295.0, 286.0, 10.0, 10.0, 1.0);
+
+    glow.setGlowProperties(5.0, juce::Colours::red, {293,284});
+  
+
+    auto state = chorusBypassButton.getToggleState();
+
+    if (state == true)
+    {
+        g.drawImageAt(dotInactive, 293, 284);
+    }
+    if (state == false)
+    {
+        g.drawImageAt(dotActive, 293, 284);
+        glow.applyEffect(dotActive, g, 0.9, 0.2);
+    }
 
 }
 

@@ -7,8 +7,11 @@
   <MAINGROUP id="io2TAc" name="RVRB">
     <GROUP id="{2FB688AC-5374-3B3B-C7D6-351366CBB72F}" name="Source">
       <GROUP id="{CF053350-B439-A669-81FF-92FF13E402F0}" name="UI">
-        <FILE id="f9C4W7" name="ratio-faceplate--temp.jpg" compile="0" resource="1"
-              file="images/ratio-faceplate--temp.jpg"/>
+        <FILE id="MOJHH8" name="reverb--faceplate.png" compile="0" resource="1"
+              file="../../../../../Dropbox/JAMES/Plugin Company/Designs/reverb--faceplate.png"/>
+        <FILE id="VT1Dx2" name="active-dot.png" compile="0" resource="1" file="../../../../../Dropbox/JAMES/Plugin Company/Designs/active-dot.png"/>
+        <FILE id="h1GVuq" name="inactive-dot.png" compile="0" resource="1"
+              file="../../../../../Dropbox/JAMES/Plugin Company/Designs/inactive-dot.png"/>
         <FILE id="YKfSGr" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
         <FILE id="F1I4ge" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
       </GROUP>
@@ -26,7 +29,7 @@
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="DSPTry"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="throne_rvrb__debug"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="throne_rvrb"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

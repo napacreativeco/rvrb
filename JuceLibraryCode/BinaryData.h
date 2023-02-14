@@ -8,11 +8,17 @@
 
 namespace BinaryData
 {
-    extern const char*   ratiofaceplatetemp_jpg;
-    const int            ratiofaceplatetemp_jpgSize = 141737;
+    extern const char*   reverbfaceplate_png;
+    const int            reverbfaceplate_pngSize = 213611;
+
+    extern const char*   activedot_png;
+    const int            activedot_pngSize = 921;
+
+    extern const char*   inactivedot_png;
+    const int            inactivedot_pngSize = 876;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 1;
+    const int namedResourceListSize = 3;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
