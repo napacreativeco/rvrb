@@ -58,18 +58,24 @@ public:
 
     juce::AudioProcessorValueTreeState apvts;
 
+    juce::AudioVisualiserComponent waveViewer;
+
+
+    enum ChainIndex
+    {
+        verbIndex,
+        chorusIndex
+    };
+
+    juce::dsp::ProcessorChain<juce::dsp::Reverb, juce::dsp::Chorus<float>> processorChain;
 private:
   
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
     juce::dsp::Reverb::Parameters reverbParameters;
 
-    enum
-    {
-        verbIndex,
-        chorusIndex 
-    };
 
-    juce::dsp::ProcessorChain<juce::dsp::Reverb, juce::dsp::Chorus<float>> processorChain;
+
+
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DSPTryAudioProcessor)

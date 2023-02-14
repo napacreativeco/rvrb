@@ -20,10 +20,13 @@ DSPTryAudioProcessor::DSPTryAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        ),
-                     apvts(*this, nullptr, "PARAMETERS", createParameters())
+                     apvts(*this, nullptr, "PARAMETERS", createParameters()),
+                     waveViewer(1)
 
 #endif
 {
+    waveViewer.setRepaintRate(30);
+    waveViewer.setBufferSize(256); 
 }
 
 DSPTryAudioProcessor::~DSPTryAudioProcessor()
@@ -166,8 +169,7 @@ void DSPTryAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     chor.setDepth(apvts.getRawParameterValue("DEPTH_ID")->load());
     chor.setCentreDelay(50);
     chor.setFeedback(0.05);
-    chor.setMix(0.345);
-
+    chor.setMix(0.325);
 
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::ProcessContextReplacing<float> ctx(block);
@@ -175,7 +177,7 @@ void DSPTryAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     //chorus.process(ctx);
 
     processorChain.process(ctx);
-
+    waveViewer.pushBuffer(buffer);
 }
 
 //==============================================================================
@@ -227,8 +229,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout DSPTryAudioProcessor::create
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DAMP_ID", "Damp", 0.0f, 1.0f, 0.0f));
 
     // chorus
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("RATE_ID", "Rate", 0.0f, 100.0f, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("RATE_ID", "Rate", 0.0f, 10.0f, 0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DEPTH_ID", "Depth", 0.0f, 1.0f, 0.0f));
+
+
+    params.push_back(std::make_unique<juce::AudioParameterBool>("MOTION_BYPASS", "motion", false));
+
     //params.push_back(std::make_unique<juce::AudioParameterFloat>("CENTRE_ID", "Centre", 0.0f, 100.0f, 50.0f));
     //params.push_back(std::make_unique<juce::AudioParameterFloat>("FEEDBACK_ID", "Feedback", -1.0f, 1.0f, 0.0f));
     //params.push_back(std::make_unique<juce::AudioParameterFloat>("MIX_ID", "Mix", 0.0f, 1.0f, 0.5f));

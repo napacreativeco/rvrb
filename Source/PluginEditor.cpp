@@ -19,6 +19,26 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
 
     setLookAndFeel(&otherLookAndFeel);
 
+    addAndMakeVisible(audioProcessor.waveViewer);
+
+    chorusBypassButton.setColour(juce::TextButton::buttonColourId, juce::Colours::transparentWhite);
+    chorusBypassButton.setColour(juce::TextButton::buttonOnColourId, juce::Colours::transparentBlack);
+    chorusBypassButton.setToggleable(true);
+    chorusBypassButton.setClickingTogglesState(true);
+    chorusBypassButton.onClick = [this]()
+    { 
+        auto state = chorusBypassButton.getToggleState();
+        if (state == true)
+        {
+            audioProcessor.processorChain.setBypassed<1>(true);
+        }
+        if (state == false)
+        {
+            audioProcessor.processorChain.setBypassed<1>(false);
+        }
+
+    };
+    addAndMakeVisible(chorusBypassButton);
 
     //================================================================
     // REVERB
@@ -63,6 +83,9 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
     depthSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 50);
     depthSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DEPTH_ID", depthSlider);
 
+    // BYPASS
+    chorusBypassAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "MOTION_BYPASS", chorusBypassButton);
+
     // CENTRE
     //centreSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     //centreSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 50);
@@ -89,6 +112,7 @@ DSPTryAudioProcessorEditor::DSPTryAudioProcessorEditor (DSPTryAudioProcessor& p)
 DSPTryAudioProcessorEditor::~DSPTryAudioProcessorEditor()
 {
     setLookAndFeel(nullptr);
+    chorusBypassButton.removeListener(this);
 }
 
 //================================================================
@@ -111,7 +135,7 @@ void DSPTryAudioProcessorEditor::resized()
 {
 
     drySlider.setBounds(57, 123, 110, 110);
-    wetSlider.setBounds(158, 20, 110, 110);
+    wetSlider.setBounds(157, 20, 110, 110);
     roomSlider.setBounds(332, 20, 110, 110);
     dampSlider.setBounds(434, 123, 110, 110);
 
@@ -124,5 +148,20 @@ void DSPTryAudioProcessorEditor::resized()
 
     // scene.setBounds(210, 172, 186, 114);
 
-    
+   audioProcessor.waveViewer.setBounds(220, 211, 159, 64);
+   chorusBypassButton.setBounds(281, 299, 38, 38);
+}
+
+
+
+void DSPTryAudioProcessorEditor::buttonClicked(juce::Button* button) // [2]
+{
+    auto state = button->getToggleState();
+    if (state == true)
+    {
+        audioProcessor.processorChain.setBypassed<1>(false);
+    }
+    else {
+        audioProcessor.processorChain.setBypassed<1>(true);
+    }
 }
